@@ -1,15 +1,15 @@
 <template>
   <div class="nav-wrapper">
     <nav class="navigation" :class="variant">
-      <router-link 
+      <a 
         v-for="item in menuItems" 
-        :key="item.path"
-        :to="item.path" 
+        :key="item.id"
+        :href="'#' + item.id" 
         class="nav-button"
-        :class="{ active: $route.path === item.path }"
+        @click.prevent="scrollToSection(item.id)"
       >
         {{ item.name }}
-      </router-link>
+      </a>
     </nav>
     <div class="nav-divider"></div>
   </div>
@@ -27,14 +27,22 @@ export default {
   data() {
     return {
       menuItems: [
-        { name: 'ANASAYFA', path: '/' },
-        { name: 'MİSYON & VİZYON', path: '/misyon-vizyon' },
-        { name: 'HAKKIMIZDA', path: '/hakkimizda' },
-        { name: 'MENÜMÜZ', path: '/menumuz' },
-        { name: 'İNSAN KAYNAKLARI', path: '/insan-kaynaklari' },
-        { name: 'İLETİŞİM', path: '/iletisim' },
-        { name: 'ORTAKLIK', path: '/ortaklik' }
+        { name: 'ANASAYFA', id: 'home' },
+        { name: 'MİSYON & VİZYON', id: 'misyon' },
+        { name: 'HAKKIMIZDA', id: 'hakkimizda' },
+        { name: 'MENÜMÜZ', id: 'menumuz' },
+        { name: 'İNSAN KAYNAKLARI', id: 'ik' },
+        { name: 'İLETİŞİM', id: 'iletisim' },
+        { name: 'ORTAKLIK', id: 'ortaklik' }
       ]
+    }
+  },
+  methods: {
+    scrollToSection(id) {
+      const element = document.getElementById(id);
+      if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+      }
     }
   }
 }
@@ -43,90 +51,49 @@ export default {
 <style scoped>
 .navigation {
   display: flex;
-  gap: 0.5rem;
+  gap: 0.8rem; /* Butonların arasını biraz açtım, daha ferah dursun */
   flex-wrap: nowrap;
-  justify-content: flex-start;
+  justify-content: flex-end; /* Sağa yaslı */
   padding: 0;
   overflow-x: auto;
 }
 
 .nav-button {
-  background: var(--yellow);
-  color: var(--text-dark);
-  padding: 0.75rem 1.2rem;
+  /* --- RENK DEĞİŞİMİ BURADA YAPILDI --- */
+  background: var(--brand-green); /* Sarı yerine senin Fıstık Yeşili */
+  color: #fff;                    /* Yazılar Beyaz */
+  
+  padding: 0.6rem 1.2rem;         /* Biraz daha kibar boyutlar */
   text-decoration: none;
-  font-weight: bold;
-  font-size: 0.75rem;
-  border-radius: 4px;
-  transition: all 0.3s;
+  font-weight: 700;               /* Yazı kalınlığı */
+  font-size: 0.85rem;
+  border-radius: 30px;            /* Köşeleri yuvarlattık (hap gibi dursun) */
+  transition: all 0.3s ease;
   border: 2px solid transparent;
   white-space: nowrap;
-  min-width: fit-content;
-  height: 2.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.05); /* Hafif gölge */
 }
 
+/* Üzerine gelince (Hover) efekti */
 .nav-button:hover {
-  background: #ffed4e;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: var(--primary-green); /* Koyu yeşile dönsün (Logodaki koyu yeşil) */
+  color: #fff;
+  transform: translateY(-2px);      /* Hafif yukarı zıplama */
+  box-shadow: 0 6px 12px rgba(46, 74, 28, 0.2);
 }
 
-.nav-button.active {
-  background: var(--primary-green);
-  color: var(--white);
-  border-color: var(--light-green);
-}
-
-/* Sarı arka plan varyantı (Menümüz sayfası için) */
-.navigation.yellow-bg .nav-button {
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--primary-green);
-  border: 1px solid var(--primary-green);
-}
-
-.navigation.yellow-bg .nav-button.active {
-  background: var(--yellow);
-  color: var(--primary-green);
-  border-color: var(--primary-green);
-}
-
-/* Beyaz arka plan varyantı (İnsan Kaynakları için) */
-.navigation.white-bg .nav-button {
-  background: var(--white);
-  color: var(--primary-green);
-  border: 1px solid var(--yellow);
-}
-
-.navigation.white-bg .nav-button.active {
-  background: var(--yellow);
-  color: var(--white);
-}
-
-/* Sarı-turuncu arka plan varyantı (İletişim için) */
-.navigation.orange-bg .nav-button {
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--text-dark);
-  border: 1px solid var(--text-dark);
-}
-
-.navigation.orange-bg .nav-button.active {
-  background: var(--primary-green);
-  color: var(--white);
-  border-color: var(--primary-green);
-}
-
+/* Navigasyon Wrapper */
 .nav-wrapper {
   width: 100%;
 }
 
+/* Divider'a gerek kalmadı, sildim veya gizledim */
 .nav-divider {
-  width: 100%;
-  height: 3px;
-  background: var(--primary-green);
-  margin-top: 0.5rem;
+  display: none;
 }
 </style>
 

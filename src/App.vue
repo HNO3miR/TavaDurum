@@ -1,29 +1,23 @@
 <template>
   <div id="app">
-    <router-view />
+    <MainLayout>
+      <router-view />
+    </MainLayout>
   </div>
 </template>
 
 <script>
+import MainLayout from './components/MainLayout.vue'
+
 export default {
-  name: 'App'
+  name: 'App',
+  components: {
+    MainLayout
+  }
 }
 </script>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-#app {
-  min-height: 100vh;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-h1, h2, h3 {
-  color: var(--primary-green);
-}
+/* Global stiller style.css'ten geliyor zaten */
 </style>
 

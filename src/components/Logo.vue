@@ -3,7 +3,7 @@
     <div class="logo-image-wrapper">
       <img 
         v-if="logoExists" 
-        src="/logo.png" 
+        :src="logoSrc" 
         alt="TAVA DÜRÜM Logo" 
         class="logo-image"
         @error="onImageError"
@@ -20,11 +20,15 @@
 </template>
 
 <script>
+// Görseli JavaScript modülü gibi import ediyoruz
+import logoImg from '@/assets/images/logo.png'
+
 export default {
   name: 'Logo',
   data() {
     return {
-      logoExists: true
+      logoExists: true,
+      logoSrc: logoImg // Import ettiğimiz görseli data'ya atadık
     }
   },
   methods: {
@@ -36,6 +40,7 @@ export default {
 </script>
 
 <style scoped>
+/* Stiller aynen kalıyor... */
 .logo-container {
   display: flex;
   align-items: center;
